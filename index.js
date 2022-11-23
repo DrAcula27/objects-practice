@@ -112,10 +112,19 @@ addNewMember({name: "Marvin", hitpoints: 42, belongings: [], companion: {name: "
 // console.log(party);
 
 // Prompt 8: The party has been doing well! They found 200 gold. Create a new property called gold and split the gold evenly between everyone. (amount of gold is parameter)
-const addGold = amountOfGold => {
+const addGold = totalGold => {
+    // divide the total gold found by the number of members in the party, and round down to the nearest int.
+    let goldPerMember = Math.floor(totalGold / party.length);
+    // initialize a remainder value for if the amount of gold found does not evenly split between everyone.
+    let remainder = totalGold % party.length;
+    // return a random index of the party to assign any remainder gold.
+    let randomMemberIndex = Math.floor(Math.random() * party.length);
+    // divvy out the evenly divided gold to everyone.
     party.forEach(member => {
-        member.gold = Math.round(amountOfGold / party.length);
+        member.gold = goldPerMember;
     });
+    // give the extra gold to a random party member.
+    party[randomMemberIndex].gold += remainder;
 }
 addGold(200);
 // console.log(party);
